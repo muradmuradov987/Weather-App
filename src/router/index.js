@@ -9,7 +9,7 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/weather/:state/city',
+    path: '/weather/:state/:city',
     name: 'cityView',
     component: CityView
   },

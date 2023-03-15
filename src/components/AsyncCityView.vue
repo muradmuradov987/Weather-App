@@ -1,5 +1,8 @@
 <template>
-  <button @click="getWeatherData()">Test</button>
+  <div>
+    <button @click="getWeatherData()">Test</button>
+   
+  </div>
 </template>
 
 <script>
@@ -7,36 +10,26 @@ import axios from "axios";
 
 export default {
   data() {
-    return {};
+    return {
+      mm: null,
+    };
   },
   methods: {
-    
-    async getWeatherData() {
-      try {
-        const weatherData = await axios.get(
-          `https://api.openweathermap.org/data/2.5/onecall?lat=${this.$route.query.lat}&lon=${this.$route.query.lng}&exclude={part}&appid=bdc97dea47562bd211affdd4e947bb5e&units=imperial`);
-
-          
-
-        // cal current date & time
-        const localOffset = new Date().getTimezoneOffset() * 60000;
-        const utc = weatherData.data.current.dt * 1000 + localOffset;
-        weatherData.data.currentTime =
-          utc + 1000 * weatherData.data.timezone_offset;
-        // cal hourly weather offset
-        weatherData.data.hourly.forEach((hour) => {
-          const utc = hour.dt * 1000 + localOffset;
-          hour.currentTime = utc + 1000 * weatherData.data.timezone_offset;
+    getWeatherData() {
+      axios
+        .get(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${this.$route.query.lat}&lon=${this.$route.query.lng}&appid=3f7d5c61bad4b8be5a7f10c93e76fb42`
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        return weatherData;
-      } catch (err) {
-        console.log(err);
-      }
     },
-    
-    // async weatherData() {
-    //   await getWeatherData();
-    // },
+  },
+  mounted() {
+    // this.getWeatherData();
   },
 };
 </script>

@@ -62,11 +62,12 @@ export default {
         this.mapBoxSearchResult = null;
       }, 300);
     },
+
     previewCity(item) {
-      const [city,state] = item.place_name.split(',')
+      const [city, state] = item.place_name.split(",")
       this.$router.push({
         name: "cityView",
-        params: { state: state.replaceAll(" ",""), city: city },
+        params: { state: state.replaceAll(" ", ""), city: city },
         query: {
           lat: item.geometry.coordinates[1],
           lng: item.geometry.coordinates[0],
