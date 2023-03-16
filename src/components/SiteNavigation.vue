@@ -1,7 +1,7 @@
 <template>
   <header class="sticky-top">
     <div class="container">
-      <nav class="d-flex justify-content-between">
+      <nav class="d-flex align-items-center justify-content-between">
         <router-link :to="{ name: 'home' }" class="text-decoration-none">
           <div class="d-flex align-items-center">
             <i class="fa-solid fa-sun text-white fs-4 fw-bold me-4"></i>
@@ -48,7 +48,7 @@ header {
   background: #00668a;
 }
 nav {
-  padding: 10px 20%;
+  height: 50px;
 }
 .info {
   color: white;

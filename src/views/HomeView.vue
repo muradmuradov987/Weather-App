@@ -89,9 +89,11 @@ main {
   box-shadow: 0px 1px 0 0 #004e71;
 }
 
-.search::placeholder {
-  color: white;
+.search:focus::-webkit-input-placeholder {
+    color: white;
 }
+
+
 .result-menu {
   background: #004e71;
   position: absolute;
