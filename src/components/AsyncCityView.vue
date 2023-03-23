@@ -28,18 +28,6 @@
         </div>
       </div>
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <p class="city__info">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti
-            nobis, ducimus omnis adipisci, modi aliquam quasi in ullam
-            temporibus dolorem eos corporis, eligendi libero obcaecati.
-            Repellendus aliquid harum autem non.
-          </p>
-        </div>
-      </div>
-    </div>
     <div class="weather__info">
       <div class="container">
         <div class="row">
@@ -117,15 +105,14 @@
         </div>
       </div>
     </div>
-
-    <img class="bg" src="../assets/weather/rain.jpg" alt="" />
-
+    <img class="bg" :src="imageSrc" alt="">
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import moment from "moment";
+
 
 export default {
   data() {
@@ -142,14 +129,9 @@ export default {
       pressure: null,
       sunrise: null,
       sunset: null,
-      daySituation: {
-        daylight: {
-          sunny: "../assets/weather/sunny.jpg"
-        },
-        night: {
+      weatherType: '',
+      imageName: ''
 
-        }
-      }
     };
   },
   methods: {
@@ -252,12 +234,34 @@ export default {
       const [sunsetHours, sunsetMinutes] = sunsetTime.split(":");
       const totalSunset = parseInt(sunsetHours, 10) * 60 + parseInt(sunsetMinutes, 10);
 
+      //Detect day type
       if (totalTime < totalSunrise || totalTime >= totalSunset) {
-        console.log("It is midnight.");
+        this.weatherType = 'night'
       } else {
-        console.log("It is not midnight.");
+        this.weatherType = 'day'
       }
 
+      //Detect weather status
+      if (this.weatherData.weather[0].main == "Sunny" || this.weatherData.weather[0].main == "Clear") {
+        this.imageName = "sunny.jpg"
+      } else if (this.weatherData.weather[0].main == "Clouds") {
+        this.imageName = "clouds.jpg"
+      } else if (this.weatherData.weather[0].main == "Snow") {
+        this.imageName = "snow.jpg"
+      } else if (this.weatherData.weather[0].main == "Mist") {
+        this.imageName = "mist.jpg"
+      } else if (this.weatherData.weather[0].main == "Rain") {
+        this.imageName = "rain.jpg"
+      } else if (this.weatherData.weather[0].main == "Thunderstorm") {
+        this.imageName = "thunderstorm.jpg"
+      } else {
+        this.imageName = "bg.jpg"
+      }
+    }
+  },
+  computed: {
+    imageSrc() {
+      return require(`../assets/weather/${this.weatherType}/${this.imageName}`);
     }
   },
   mounted() {
@@ -307,15 +311,11 @@ export default {
   font-size: 30px;
 }
 
-.city__info {
-  color: white;
-  font-size: 20px;
-}
 
 .weather__info {
   padding: 30px 0px;
-  background: rgba(24, 24, 133, 0.3);
-  backdrop-filter: blur(5.5px);
+  background: rgba(48, 48, 58, 0.5);
+  backdrop-filter: blur(2.5px);
 }
 
 .weather__img {
