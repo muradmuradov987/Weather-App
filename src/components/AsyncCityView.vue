@@ -91,8 +91,9 @@
                 <span class="text-white">{{ this.sunrise }}</span>
               </div>
               <div class="sunmoon">
-                <div class="sun-path"></div>
-                <span class="symbol">☀</span>
+                <div class="sun-path" :style="{ transform: 'rotate(' + sunPosition + 'deg)' }">
+                  <span class="symbol">☀</span>
+                </div>
               </div>
               <div class="sunset">
                 <i class="fs-5 text-white fa-solid fa-moon"></i>
@@ -130,7 +131,8 @@ export default {
       sunrise: null,
       sunset: null,
       weatherType: '',
-      imageName: ''
+      imageName: '',
+      deg: '60deg'
 
     };
   },
@@ -257,11 +259,23 @@ export default {
       } else {
         this.imageName = "bg.jpg"
       }
-    }
+    },
+
+
+
   },
   computed: {
     imageSrc() {
       return require(`../assets/weather/${this.weatherType}/${this.imageName}`);
+    },
+    sunPosition() {
+      const now = new Date(this.weatherData.currentTime);
+      const sunriseTime = new Date(`${now.toDateString()} ${this.sunrise}`);
+      const sunsetTime = new Date(`${now.toDateString()} ${this.sunset}`);
+      const totalTime = sunsetTime - sunriseTime;
+      const elapsedTime = now - sunriseTime;
+      const degree = (elapsedTime / totalTime) * 180;
+      return degree
     }
   },
   mounted() {
@@ -331,24 +345,30 @@ export default {
 
 
 .sunmoon {
-  position: relative;
-  width: 100%;
-  height: 80px;
+  width: 200px;
+  height: 100px;
   margin: 0 20px;
-  border-bottom: 1px solid white;
+  border-bottom: 2px solid white;
   overflow: hidden;
+  padding: 8px;
+
 }
 
 .sun-path {
-  height: 200px;
-  border: 1px dashed white;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
+  position: relative;
+  border: 2px solid white;
 }
+
+
 
 .symbol {
   position: absolute;
-  left: 0;
-  bottom: 0;
-  transform: translate(90px, -60px);
+  left: -12px;
+  top: 50%;
+  transform: translate(0%, -50%);
+  z-index: 10;
 }
 </style>
