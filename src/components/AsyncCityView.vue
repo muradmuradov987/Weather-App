@@ -1,17 +1,13 @@
 <template>
-  <div v-if="Object.keys(weatherData).length > 0"
-    class="info__container position-relative d-flex flex-column justify-content-between z-index10">
-
-    <!--Banner-->
-    <p class="info_msj">
-      You are previewing this city, click this '+' icon to start tracking this
-      city.
-    </p>
+  <div
+    v-if="Object.keys(weatherData).length > 0"
+    class="info__container position-relative d-flex flex-column justify-content-between z-index10"
+  >
     <!--Weather Overview-->
     <div class="container">
-      <div class="row">
+      <div class="row mt-3 mt-md-5">
         <div class="col-md-6">
-          <div class="time__info">
+          <div class="time__info text-center">
             <h1>
               {{ this.cityTime }} <span>{{ this.amOrPm }}</span>
             </h1>
@@ -19,7 +15,9 @@
           </div>
         </div>
         <div class="col-md-6">
-          <div class="country__info d-flex justify-content-end">
+          <div
+            class="country__info d-flex justify-content-center justify-content-md-end"
+          >
             <div>
               <h1>{{ this.$route.params.city }}</h1>
               <h4>{{ this.$route.params.state }}</h4>
@@ -31,8 +29,8 @@
     <div class="weather__info">
       <div class="container">
         <div class="row">
-          <div class="col-md-4">
-            <div class="d-flex">
+          <div class="col-xl-4 mb-4 mb-xl-0">
+            <div class="d-flex ">
               <div class="weather__img">
                 <img :src="iconLink" alt="" />
               </div>
@@ -47,14 +45,18 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-xl-4 mb-4 mb-xl-0">
             <div>
               <div class="d-flex justify-content-between mb-3">
                 <div class="w-50 d-flex">
-                  <i class="text-white me-3 fs-5 fa-solid fa-temperature-half"></i>
+                  <i
+                    class="text-white me-3 fs-5 fa-solid fa-temperature-half"
+                  ></i>
                   <div>
                     <p class="text-white fs-5 m-0">Real Feel</p>
-                    <h2 class="text-white fs-2">{{ this.realFeel }}<span>&#176;</span></h2>
+                    <h2 class="text-white fs-2">
+                      {{ this.realFeel }}<span>&#176;</span>
+                    </h2>
                   </div>
                 </div>
                 <div class="w-50 d-flex">
@@ -74,7 +76,9 @@
                   </div>
                 </div>
                 <div class="w-50 d-flex">
-                  <i class="text-white me-3 fs-5 fa-solid fa-arrows-down-to-line"></i>
+                  <i
+                    class="text-white me-3 fs-5 fa-solid fa-arrows-down-to-line"
+                  ></i>
                   <div>
                     <p class="text-white fs-5 m-0">Pressure</p>
                     <h2 class="text-white fs-2">{{ this.pressure }} mb</h2>
@@ -83,15 +87,20 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="d-flex align-items-center justify-content-between h-100">
+          <div class="col-xl-4">
+            <div
+              class="d-flex align-items-center justify-content-between h-100"
+            >
               <div class="sunrise">
                 <i class="fs-5 text-white fa-solid fa-sun"></i>
                 <p class="text-white">Sunrise</p>
                 <span class="text-white">{{ this.sunrise }}</span>
               </div>
               <div class="sunmoon">
-                <div class="sun-path" :style="{ transform: 'rotate(' + sunPosition + 'deg)' }">
+                <div
+                  class="sun-path"
+                  :style="{ transform: 'rotate(' + sunPosition + 'deg)' }"
+                >
                   <span class="symbol">☀</span>
                 </div>
               </div>
@@ -101,19 +110,17 @@
                 <span class="text-white">{{ this.sunset }}</span>
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
-    <img class="bg" :src="imageSrc" alt="">
+    <img class="bg" :src="imageSrc" alt="" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import moment from "moment";
-
 
 export default {
   data() {
@@ -130,10 +137,8 @@ export default {
       pressure: null,
       sunrise: null,
       sunset: null,
-      weatherType: '',
-      imageName: '',
-      deg: '60deg'
-
+      weatherType: "",
+      imageName: "",
     };
   },
   methods: {
@@ -144,7 +149,6 @@ export default {
         )
         .then((res) => {
           this.weatherData = res.data;
-          // console.log(res.data);
           this.getDateTime();
           this.getIcon();
           this.temp = Math.round(this.weatherData.main.temp);
@@ -152,8 +156,8 @@ export default {
           this.humidity = Math.round(this.weatherData.main.humidity);
           this.pressure = Math.round(this.weatherData.main.pressure);
           this.wind = Math.round(this.weatherData.wind.speed);
-          this.getSunriseSunset()
-          this.setBackground()
+          this.getSunriseSunset();
+          this.setBackground();
         })
         .catch((err) => {
           console.log(err);
@@ -214,11 +218,17 @@ export default {
     },
 
     getSunriseSunset() {
-      let timezone = this.weatherData.timezone
-      let sunrise = this.weatherData.sys.sunrise
-      let sunset = this.weatherData.sys.sunset
-      this.sunrise = moment.utc(sunrise, 'X').add(timezone, 'seconds').format('HH:mm');
-      this.sunset = moment.utc(sunset, 'X').add(timezone, 'seconds').format('HH:mm');
+      let timezone = this.weatherData.timezone;
+      let sunrise = this.weatherData.sys.sunrise;
+      let sunset = this.weatherData.sys.sunset;
+      this.sunrise = moment
+        .utc(sunrise, "X")
+        .add(timezone, "seconds")
+        .format("HH:mm");
+      this.sunset = moment
+        .utc(sunset, "X")
+        .add(timezone, "seconds")
+        .format("HH:mm");
     },
     setBackground() {
       //Calc current time minutes
@@ -229,40 +239,42 @@ export default {
       //Calc sunrise time minutes
       const sunriseTime = this.sunrise;
       const [sunriseHours, sunriseMinutes] = sunriseTime.split(":");
-      const totalSunrise = parseInt(sunriseHours, 10) * 60 + parseInt(sunriseMinutes, 10);
+      const totalSunrise =
+        parseInt(sunriseHours, 10) * 60 + parseInt(sunriseMinutes, 10);
 
       //Calc sunrise time minutes
       const sunsetTime = this.sunset;
       const [sunsetHours, sunsetMinutes] = sunsetTime.split(":");
-      const totalSunset = parseInt(sunsetHours, 10) * 60 + parseInt(sunsetMinutes, 10);
+      const totalSunset =
+        parseInt(sunsetHours, 10) * 60 + parseInt(sunsetMinutes, 10);
 
       //Detect day type
       if (totalTime < totalSunrise || totalTime >= totalSunset) {
-        this.weatherType = 'night'
+        this.weatherType = "night";
       } else {
-        this.weatherType = 'day'
+        this.weatherType = "day";
       }
 
       //Detect weather status
-      if (this.weatherData.weather[0].main == "Sunny" || this.weatherData.weather[0].main == "Clear") {
-        this.imageName = "sunny.jpg"
+      if (
+        this.weatherData.weather[0].main == "Sunny" ||
+        this.weatherData.weather[0].main == "Clear"
+      ) {
+        this.imageName = "sunny.jpg";
       } else if (this.weatherData.weather[0].main == "Clouds") {
-        this.imageName = "clouds.jpg"
+        this.imageName = "clouds.jpg";
       } else if (this.weatherData.weather[0].main == "Snow") {
-        this.imageName = "snow.jpg"
+        this.imageName = "snow.jpg";
       } else if (this.weatherData.weather[0].main == "Mist") {
-        this.imageName = "mist.jpg"
+        this.imageName = "mist.jpg";
       } else if (this.weatherData.weather[0].main == "Rain") {
-        this.imageName = "rain.jpg"
+        this.imageName = "rain.jpg";
       } else if (this.weatherData.weather[0].main == "Thunderstorm") {
-        this.imageName = "thunderstorm.jpg"
+        this.imageName = "thunderstorm.jpg";
       } else {
-        this.imageName = "bg.jpg"
+        this.imageName = "bg.jpg";
       }
     },
-
-
-
   },
   computed: {
     imageSrc() {
@@ -275,8 +287,8 @@ export default {
       const totalTime = sunsetTime - sunriseTime;
       const elapsedTime = now - sunriseTime;
       const degree = (elapsedTime / totalTime) * 180;
-      return degree
-    }
+      return degree;
+    },
   },
   mounted() {
     this.getWeatherData();
@@ -300,14 +312,6 @@ export default {
   z-index: -1;
 }
 
-.info_msj {
-  text-align: center;
-  padding: 15px 0px;
-  background: #004e71;
-  color: white;
-  z-index: 10 !important;
-}
-
 .time__info h1 span {
   font-size: 40px;
 }
@@ -324,7 +328,6 @@ export default {
   color: white;
   font-size: 30px;
 }
-
 
 .weather__info {
   padding: 30px 0px;
@@ -343,7 +346,6 @@ export default {
   object-fit: cover;
 }
 
-
 .sunmoon {
   width: 200px;
   height: 100px;
@@ -351,7 +353,6 @@ export default {
   border-bottom: 2px solid white;
   overflow: hidden;
   padding: 8px;
-
 }
 
 .sun-path {
@@ -362,13 +363,33 @@ export default {
   border: 2px solid white;
 }
 
-
-
 .symbol {
   position: absolute;
   left: -12px;
   top: 50%;
   transform: translate(0%, -50%);
   z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .time__info {
+    margin-bottom: 30px;
+  }
+  .time__info h1 {
+    font-size: 30px;
+  }
+  .time__info h1 span {
+    font-size: 20px;
+  }
+
+  .time__info h1,
+  .country__info h1 {
+    font-size: 30px;
+  }
+
+  .time__info h4,
+  .country__info h4 {
+    font-size: 20px;
+  }
 }
 </style>

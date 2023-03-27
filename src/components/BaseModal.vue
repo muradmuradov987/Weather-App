@@ -6,31 +6,14 @@
     >
       <div class="modal__body rounded-2">
         <div class="mb-4">
-          <h3>About:</h3>
-          <p class="mb-4">
-            The Local Weather allows you to track the current and future weather
-            of cities of your choosing.
-          </p>
-          <h3>How it works:</h3>
-          <ol class="list-decimal list-inside mb-4">
-            <li>
-              Search for your city by entering the name into the search bar.
-            </li>
-            <li>
-              Select a city within the results, this will take you to the
-              current weather for your selection.
-            </li>
-            <li>
-              Track the city by clicking on the "+" icon in the top right. This
-              will save the city to view at a later time on the home page.
-            </li>
-          </ol>
-
-          <h3>Removing a city</h3>
+          <h3>Info:</h3>
           <p>
-            If you no longer wish to track a city, simply select the city within
-            the home page. At the bottom of the page, there will be am option to
-            delete the city.
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui
+            temporibus ut nostrum harum alias. Debitis excepturi voluptas sequi
+            exercitationem, doloribus odio repellat et illo eum delectus iure
+            nam sunt alias! Praesentium, excepturi amet voluptates eaque saepe
+            nostrum veniam perspiciatis eos impedit iusto doloremque soluta
+            fugit quas harum iste? Debitis, ducimus.
           </p>
         </div>
         <button
@@ -82,5 +65,13 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .modal__body {
+  margin-top: 50px;
+  width: 90%;
+  padding: 20px;
+}
 }
 </style>

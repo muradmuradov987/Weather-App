@@ -64,14 +64,14 @@ export default {
     },
 
     previewCity(item) {
-      const [city, state] = item.place_name.split(",")
+      const [city, state] = item.place_name.split(",");
       this.$router.push({
         name: "cityView",
         params: { state: state.replaceAll(" ", ""), city: city },
         query: {
           lat: item.geometry.coordinates[1],
           lng: item.geometry.coordinates[0],
-          preview: true
+          preview: true,
         },
       });
     },
@@ -90,9 +90,8 @@ main {
 }
 
 .search:focus::-webkit-input-placeholder {
-    color: white;
+  color: white;
 }
-
 
 .result-menu {
   background: #004e71;
@@ -107,5 +106,11 @@ main {
 .result-menu li {
   list-style: none;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 0px;
+  }
 }
 </style>

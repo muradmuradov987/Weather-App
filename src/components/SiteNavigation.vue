@@ -14,7 +14,6 @@
             @click="openModal()"
             class="fa-solid fa-circle-info fs-4 fw-bold me-3 info"
           ></i>
-          <i class="fa-solid fa-plus fs-4 fw-bold info"></i>
         </div>
           <BaseModal/>
       </nav>
